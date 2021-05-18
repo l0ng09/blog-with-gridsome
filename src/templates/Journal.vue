@@ -9,10 +9,9 @@
           <div data-v-2a0eef53="" class="journal-meta">
             <div data-v-2a0eef53="" class="journal-author">
               <span data-v-2a0eef53="" class="label">Author</span>
-              <span data-v-2a0eef53="" class="author-name"
-                >Nichlas W. Andersen
-                </span
-              >
+              <span data-v-2a0eef53="" class="author-name">
+                {{ $page.journal.author }}
+              </span>
             </div>
             <div data-v-2a0eef53="" class="journal-date">
               <span data-v-2a0eef53="" class="label">Date</span>
@@ -25,7 +24,7 @@
           </div>
         </div>
         <div data-v-2a0eef53="" class="journal-content">
-          this is journal content
+          {{ $page.journal.content }}
         </div>
       </div>
     </div>
@@ -33,11 +32,13 @@
 </template>
 
 <page-query>
-query ($id: ID!) {
-  journal(id: $id) {
-    id,
+query($id: ID!){
+  journal: strapiJournals(id:$id){
+    author,
     title,
-    body,
+    describe,
+    content,
+    created_at,
   }
 }
 </page-query>
@@ -47,7 +48,7 @@ export default {
   name: 'JournalPage',
   metaInfo() {
     return {
-      title: this.$page.post.title
+      title: this.$page.journal.title
     }
   }
 }

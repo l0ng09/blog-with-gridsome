@@ -8,19 +8,39 @@
       </div>
     </div>
 
-    <a data-v-da896d1e="" class="journal-post"
-      ><div data-v-da896d1e="" class="container journal">
+    <g-link
+      data-v-da896d1e=""
+      class="journal-post"
+      v-for="item in $page.journals.edges"
+      :key="item.node.id"
+      :to="`/journal/${item.node.id}`"
+    >
+      <div data-v-da896d1e="" class="container journal">
         <h2 data-v-da896d1e="" class="journal-title">
-          Gridsome with Forestry CMS
+          {{ item.node.title }}
         </h2>
         <p data-v-da896d1e="" class="journal-excerpt">
-          Get up and running with Forestry CMS, a git-backed headless CMS with a
-          slick editing interface.
+          {{ item.node.describe }}
         </p>
       </div>
-    </a>
+    </g-link>
   </Layout>
 </template>
+
+<page-query>
+query{
+  journals: allStrapiJournals{
+    totalCount,
+    edges{
+			node{
+        id,
+        title,
+        describe,
+      }    
+  	}
+  }
+}
+</page-query>
 
 <script>
 export default {
