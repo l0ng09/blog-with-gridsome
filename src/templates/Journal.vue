@@ -15,17 +15,23 @@
             </div>
             <div data-v-2a0eef53="" class="journal-date">
               <span data-v-2a0eef53="" class="label">Date</span>
-              <div data-v-2a0eef53="">18. May 2019</div>
+              <div data-v-2a0eef53="">
+                {{ $page.journal.created_at | date("DD. MMM YYYY") }}
+              </div>
             </div>
             <div data-v-2a0eef53="" class="journal-time">
               <span data-v-2a0eef53="" class="label">Time</span>
-              <span data-v-2a0eef53="">1 min read</span>
+              <span data-v-2a0eef53="">{{
+                $page.journal.created_at | date("HH:mm")
+              }}</span>
             </div>
           </div>
         </div>
-        <div data-v-2a0eef53="" class="journal-content">
-          {{ $page.journal.content }}
-        </div>
+        <div
+          data-v-2a0eef53=""
+          class="journal-content"
+          v-html="mdToHtml($page.journal.content)"
+        ></div>
       </div>
     </div>
   </Layout>
@@ -44,11 +50,18 @@ query($id: ID!){
 </page-query>
 
 <script>
+import MarkdownIt from 'markdown-it';
 export default {
   name: 'JournalPage',
   metaInfo() {
     return {
       title: this.$page.journal.title
+    }
+  },
+  methods: {
+    mdToHtml(markdown) {
+      const md = new MarkdownIt()
+      return md.render(markdown)
     }
   }
 }
