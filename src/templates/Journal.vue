@@ -30,7 +30,7 @@
         <div
           data-v-2a0eef53=""
           class="journal-content"
-          v-html="mdToHtml($page.journal.content)"
+          v-html="mdToHtml($page.journal.content.replace('/uploads/', `${GRIDSOME_API_URL}/uploads/`))"
         ></div>
       </div>
     </div>

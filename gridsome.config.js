@@ -19,7 +19,7 @@ module.exports = {
     {
       use: '@gridsome/source-strapi',
       options: {
-        apiURL: 'http://guanai100.com:1337',
+        apiURL: process.env.GRIDSOME_API_URL,
         queryLimit: 1000, // Defaults to 100
         contentTypes: ['journals', 'tags'],
         // singleTypes: ['impressum'],
