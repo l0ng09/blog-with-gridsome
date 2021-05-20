@@ -9,77 +9,36 @@
         </h2>
       </div>
       <div data-v-50cbff3e="" class="projects">
-        <div data-v-50cbff3e="" class="project">
-          <a
+        <div
+          data-v-50cbff3e=""
+          class="project"
+          v-for="item in $page.photography.edges"
+          :key="item.node.id"
+        >
+          <g-link
             data-v-50cbff3e=""
-            href="/projects/chelsea-landmark/"
+            :to="`/journal/${item.node.id}`"
             class="project-link"
           >
             <img
               data-v-50cbff3e=""
-              alt="Banana"
-              src="/img/mike-dorner.jpg"
+              :alt="item.node.title"
+              :src="GRIDSOME_API_URL + item.node.cover.url"
               width="2560"
               class="thumbnail g-image g-image--lazy g-image--loaded"
             />
-            <h3 data-v-50cbff3e="" class="project-title">Banana</h3>
+            <h3 data-v-50cbff3e="" class="project-title">
+              {{ item.node.title }}
+            </h3>
             <div data-v-50cbff3e="" class="categories">
-              <span data-v-50cbff3e="" class="category">photography</span>
-              <span data-v-50cbff3e="" class="category">pink</span>
+              <span
+                data-v-50cbff3e=""
+                class="category"
+                v-for="tag in item.node.tags"
+                >{{ tag.tag }}</span
+              >
             </div>
-          </a>
-        </div>
-        <div data-v-50cbff3e="" class="project">
-          <a data-v-50cbff3e="" href="/projects/sunk/" class="project-link">
-            <img
-              data-v-50cbff3e=""
-              alt="Pineapple"
-              src="/img/cody-davis.jpg"
-              width="2560"
-              class="thumbnail g-image g-image--lazy g-image--loaded"
-            />
-            <h3 data-v-50cbff3e="" class="project-title">Pineapple</h3>
-            <div data-v-50cbff3e="" class="categories">
-              <span data-v-50cbff3e="" class="category">photography</span>
-              <span data-v-50cbff3e="" class="category">blue</span>
-            </div>
-          </a>
-        </div>
-        <div data-v-50cbff3e="" class="project">
-          <a data-v-50cbff3e="" href="/projects/3d-graff/" class="project-link">
-            <img
-              data-v-50cbff3e=""
-              alt="Ice Cream"
-              src="/img/ian-dooley.jpg"
-              width="2560"
-              class="thumbnail g-image g-image--lazy g-image--loaded"
-            />
-            <h3 data-v-50cbff3e="" class="project-title">Ice Cream</h3>
-            <div data-v-50cbff3e="" class="categories">
-              <span data-v-50cbff3e="" class="category">photography</span>
-              <span data-v-50cbff3e="" class="category">yellow</span>
-            </div>
-          </a>
-        </div>
-        <div data-v-50cbff3e="" class="project">
-          <a
-            data-v-50cbff3e=""
-            href="/projects/ios-concept/"
-            class="project-link"
-          >
-            <img
-              data-v-50cbff3e=""
-              alt="Porta400"
-              src="/img/markus-spiske.jpg"
-              width="2560"
-              class="thumbnail g-image g-image--lazy g-image--loaded"
-            />
-            <h3 data-v-50cbff3e="" class="project-title">Porta400</h3>
-            <div data-v-50cbff3e="" class="categories">
-              <span data-v-50cbff3e="" class="category">photography</span>
-              <span data-v-50cbff3e="" class="category">yellow</span>
-            </div>
-          </a>
+          </g-link>
         </div>
       </div>
     </div>
@@ -90,50 +49,55 @@
       </div>
       <div data-v-460714ac="" class="latest-journals">
         <div data-v-460714ac="" class="container">
-          <a
+          <g-link
             data-v-460714ac=""
-            href="/journal/gridsome-forestry-cms/"
+            v-for="item in $page.greatest.edges"
+            :to="`/journal/${item.node.id}`"
             class="journal"
+            :key="item.node.id"
           >
             <h3 data-v-460714ac="" class="journal-title">
-              Gridsome with Forestry CMS
+              {{item.node.title}}
             </h3>
-          </a>
-          <a
-            data-v-460714ac=""
-            href="/journal/use-gridsome-vuejs/"
-            class="journal"
-          >
-            <h3 data-v-460714ac="" class="journal-title">
-              VueJS for your next project
-            </h3>
-          </a>
-          <a
-            data-v-460714ac=""
-            href="/journal/macos-development-environment/"
-            class="journal"
-          >
-            <h3 data-v-460714ac="" class="journal-title">
-              macOS development environment
-            </h3>
-          </a>
-          <a
-            data-v-460714ac=""
-            href="/journal/a-journal-entry/"
-            class="journal"
-          >
-            <h3 data-v-460714ac="" class="journal-title">About Typography</h3>
-          </a>
+          </g-link>
         </div>
       </div>
     </div>
   </Layout>
 </template>
 
+<page-query>
+query{
+  photography: allStrapiJournals(filter: { tags: {tag:{ in: ["photography"] }}}){
+    edges{
+      node{
+        id,
+        title,
+        tags{
+          tag
+        },
+        cover{
+          url,
+        }
+      }
+    }
+  }
+  greatest:allStrapiJournals(limit:4,sortBy:"id",order:ASC){
+    edges{
+      node{
+        id,
+        title,
+      }
+    }
+  }
+}
+</page-query>
+
 <script>
 export default {
+  name: 'HomePage',
   metaInfo: {
-    title: 'Hello, world!'
+    title: 'Hello, Gridsome!'
   }
 }
 </script>

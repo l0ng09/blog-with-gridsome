@@ -4,7 +4,7 @@
       <div data-v-2a0eef53="" class="container journal-container">
         <div data-v-2a0eef53="" class="journal-header">
           <h1 data-v-2a0eef53="" class="journal-title">
-            macOS development environment
+              {{ $page.journal.title }}
           </h1>
           <div data-v-2a0eef53="" class="journal-meta">
             <div data-v-2a0eef53="" class="journal-author">
